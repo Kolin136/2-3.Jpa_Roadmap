@@ -2,19 +2,15 @@ package jpabook.jpashop.api;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import jpabook.jpashop.api.MemberApiController.MemberDto;
-import jpabook.jpashop.api.MemberApiController.Result;
 import jpabook.jpashop.domain.Address;
-import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
-import lombok.AllArgsConstructor;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderSimpleApiController {
 
   private final OrderRepository orderRepository;
+  private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
   @GetMapping("/api/v1/simple-orders")
   public List<Order> ordersV1(){
@@ -52,6 +49,11 @@ public class OrderSimpleApiController {
         .map(o -> new SimpleOrderDto(o))
         .toList();
     return result;
+  }
+
+  @GetMapping("/api/v4/simple-orders")
+  public List<OrderSimpleQueryDto> ordersV4() {
+    return orderSimpleQueryRepository.findOrderDtos();
   }
 
 

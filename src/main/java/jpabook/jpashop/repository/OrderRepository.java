@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+
 import jpabook.jpashop.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -132,4 +133,6 @@ public class OrderRepository {
         .setMaxResults(limit)
         .getResultList();
   }
+
+
 }
