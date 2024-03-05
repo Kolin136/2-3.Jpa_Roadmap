@@ -37,6 +37,7 @@ public class Order {
   @JoinColumn(name = "member_id")
   private Member member; //주문 회원
 
+
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
   private List<OrderItem> orderItems = new ArrayList<>();
 
