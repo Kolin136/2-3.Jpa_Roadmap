@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -51,12 +52,17 @@ public class OrderApiController {
     return result;
   }
 
+  @GetMapping("/api/v3.1/orders")
+  public List<OrderDto> orderV3_page(
+      @RequestParam(value = "offset",defaultValue = "0") int offset,
+      @RequestParam(value = "limit",defaultValue = "100") int limit) {
 
-
-
-
-
-
+    List<Order> orders = orderRepository.findAllWithMemberDelivery(offset,limit);
+    List<OrderDto> result = orders.stream()
+        .map(o -> new OrderDto(o))
+        .toList();
+    return result;
+  }
 
   @Data
   static class OrderDto{
